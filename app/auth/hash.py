@@ -1,13 +1,7 @@
-from argon2 import PasswordHasher
+import bcrypt
 
-_ph = PasswordHasher()  # Argon2id by default
+def hash_pw(password: str) -> str:
+    return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
 
-def hash_pw(plain: str) -> str:
-    return _ph.hash(plain)
-
-def verify_pw(hashed: str, plain: str) -> bool:
-    try:
-        _ph.verify(hashed, plain)
-        return True
-    except Exception:
-        return False
+def verify_pw(hashed: str, password: str) -> bool:
+    return bcrypt.checkpw(password.encode(), hashed.encode())

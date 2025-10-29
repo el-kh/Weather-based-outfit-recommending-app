@@ -1,10 +1,15 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-
 from app.auth.router import router as auth_router
+
 from app.auth.middleware import AuthMiddleware
+from app.auth.router import router as auth_router
+
 
 app = FastAPI(title="Weather Outfit Recommender")
+
+app.include_router(auth_router)
+app.add_middleware(AuthMiddleware)
 
 # CORS (adjust origins for Android/emulator/web as needed)
 app.add_middleware(

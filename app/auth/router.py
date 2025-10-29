@@ -20,7 +20,10 @@ COOKIE_OPTS = {"httponly": True, "secure": False, "samesite": "lax", "path": "/"
 
 class RegisterIn(BaseModel):
     email: EmailStr
-    password: constr(min_length=8)
+    password: str
+
+    class Config:
+        min_length_password = 8
 
 class LoginIn(BaseModel):
     email: EmailStr

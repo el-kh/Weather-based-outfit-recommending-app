@@ -5,3 +5,12 @@ Activate flow: For HW2 demo, we return activate_token from /auth/register. Paste
 DB Base reuse: Models import Base from app.database so there’s one metadata source (no duplicate declarative bases).
 
 Middleware skips docs: You can still open /docs without being logged in.
+
+
+
+
+
+{
+  "message": "Account created. Use /auth/activate?token=... to activate.",
+  "activate_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwianRpIjoiYjQ4YWY2MmYtODBkMi00OWEwLWEzZjctMWY5ZTg1ZjE3YWFjIiwidHlwZSI6ImFjdGl2YXRlIiwiaWF0IjoxNzYxNzQ5MzA4LCJleHAiOjE3NjE4MzU3MDh9.2dOq4F566H-DZSH3aPvWtD0vcJgpfwDrYUN3izfSuN4"
+}
