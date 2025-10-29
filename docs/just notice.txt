@@ -1,0 +1,7 @@
+Cookies in dev: secure=False so cookies work on http://127.0.0.1:8000. Flip to True in prod.
+
+Activate flow: For HW2 demo, we return activate_token from /auth/register. Paste it into /auth/activate?token=... to activate.
+
+DB Base reuse: Models import Base from app.database so there’s one metadata source (no duplicate declarative bases).
+
+Middleware skips docs: You can still open /docs without being logged in.
