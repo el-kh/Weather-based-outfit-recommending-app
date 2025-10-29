@@ -5,9 +5,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# 👇 make sure your .env file has DATABASE_URL like:
-# DATABASE_URL=postgresql+psycopg2://postgres:your_password@localhost:5432/weatherdb
-
 # Convert to async URL
 url = os.getenv("DATABASE_URL", "")
 if "psycopg2" in url:
