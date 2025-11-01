@@ -8,9 +8,11 @@ Middleware skips docs: You can still open /docs without being logged in.
 
 
 
+<<<<<<< HEAD
+DATABASE_URL=postgresql+psycopg2://postgres:pass1256!@localhost:5432/weatherdb
+REDIS_URL=redis://localhost:6379/0
+JWT_SECRET=supersecretkey
 
 
-{
-  "message": "Account created. Use /auth/activate?token=... to activate.",
-  "activate_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzIiwianRpIjoiYjQ4YWY2MmYtODBkMi00OWEwLWEzZjctMWY5ZTg1ZjE3YWFjIiwidHlwZSI6ImFjdGl2YXRlIiwiaWF0IjoxNzYxNzQ5MzA4LCJleHAiOjE3NjE4MzU3MDh9.2dOq4F566H-DZSH3aPvWtD0vcJgpfwDrYUN3izfSuN4"
-}
+
+
