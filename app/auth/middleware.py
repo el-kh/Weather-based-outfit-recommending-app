@@ -1,23 +1,26 @@
 from fastapi import Request, HTTPException
 from starlette.middleware.base import BaseHTTPMiddleware
-from .deps import verify_token
-from .redis_store import is_denied
-
-SKIP_PREFIXES = ("/auth/", "/docs", "/redoc", "/openapi.json", "/healthz")
+from app.auth.deps import verify_token
 
 class AuthMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
-        path = request.url.path
-        if any(path.startswith(p) for p in SKIP_PREFIXES):
-            return await call_next(request)
+        token = request.cookies.get("access_token")
+        if not token:
+            auth_header = request.headers.get("Authorization")
+            if auth_header and auth_header.startswith("Bearer "):
+                token = auth_header.split(" ")[1]
 
-        tok = request.cookies.get("access_token")
-        if not tok:
-            raise HTTPException(401, "Missing token")
+        print("[DEBUG] access_token:", token)  # 👈 add this
 
-        p = verify_token(tok, "access")
-        if await is_denied(p["jti"]):
-            raise HTTPException(401, "Revoked")
+        request.state.user_id = None
+        if token:
+            try:
+                payload = verify_token(token, "access")
+                request.state.user_id = int(payload["sub"])
+                print("[DEBUG] user_id from token:", request.state.user_id)
+            except HTTPException as e:
+                print("[DEBUG] Token verification failed:", e.detail)
+                request.state.user_id = None
 
-        request.state.user_id = int(p["sub"])
-        return await call_next(request)
+        response = await call_next(request)
+        return response

@@ -9,8 +9,13 @@ async def store_refresh(jti: str, user_id: int, seconds: int):
     await r.setex(f"rt:{jti}", seconds, str(user_id))
 
 async def take_refresh(jti: str):
-    # rotation: get & delete; None if not found
-    return await r.getdel(f"rt:{jti}")
+    key = f"rt:{jti}"
+    # emulate GETDEL for Redis < 6.2
+    async with r.pipeline(transaction=True) as pipe:
+        pipe.get(key)
+        pipe.delete(key)
+        result, _ = await pipe.execute()
+        return result
 
 async def deny_access(jti: str, seconds: int):
     await r.setex(f"blk:{jti}", seconds, "1")
